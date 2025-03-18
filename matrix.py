@@ -1,4 +1,6 @@
 import random
+from test_mining import TestMiningGrid
+
 class MiningGrid:
 
     def __init__(self):
@@ -79,28 +81,44 @@ class MiningGrid:
             total +=self.mine_sector((x,y),a)
         return total
 
+
     def find_richest_sector(self):
-        """
-        Finds the sector (row, column) with the highest resource level.
-        Returns a tuple (row, column, value).
-        """
-        
+        max_val = 0
+        y_in = 0
+        for x in self.grid:
+            
+            if max(x) > max_val:
+                max_val = max(x)
+                location = x.index(max_val)
+                location_y =y_in
+            y_in +=1
+
+        return (location,location_y,max_val)  
 
     def find_depleted_sectors(self):
-        """
-        Finds all sectors with 0 resources.
-        Returns a list of (row, column) tuples.
-        """
-        for y in self.grid:
-            for x in y:
-                pass
+        min_val = max(self.grid[1])
+        y_in = 0
+        for x in self.grid:
+            
+            if min(x) < min_val:
+                min_val = min(x)
+                location = x.index(min_val)
+                location_y =y_in
+            y_in +=1
 
+        return (location,location_y,min_val)         
 
     def average_resource_level(self):
         """
         Calculates the average resource level of the asteroid.
         """
-        pass
+        val = 0
+        num = 0 
+        for x in self.grid:
+            for y in x:
+                val += y
+                num +=1
+        return (val / num)
 
     def best_region(self):
         """
@@ -109,12 +127,17 @@ class MiningGrid:
         Returns:
         A list of 4 (x, y) tuples
         """
-        pass
+        
 
 
 c = MiningGrid()
-c.generate()
-c.print_grid()
-#print(c.mine_sector((1,2),5))
-print(c.bulk_mine([(4,2,9),(3,1,5)]))
-c.print_grid()
+""""
+    c.generate()
+    c.print_grid()
+    #print(c.mine_sector((1,2),5))
+    print(c.bulk_mine([(4,2,9),(3,1,5)]))
+    c.print_grid()
+    c.find_richest_sector()
+"""""
+test  = TestMiningGrid()
+test.test_find_richest_sector()
