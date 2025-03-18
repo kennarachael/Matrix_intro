@@ -93,7 +93,7 @@ class MiningGrid:
         """
         for y in self.grid:
             for x in y:
-                
+                pass
 
 
     def average_resource_level(self):
